@@ -47,15 +47,12 @@
             const resultDiv = document.getElementById('result');
             resultDiv.innerText = result.message; 
             document.querySelector('input[name="solution"]').value = ""; 
-
+            updateScoreDisplay(result.score);
             // if the answer is correct, update the image and score
             if (result.new_image_url) {
                 document.getElementById('banana-image').src = result.new_image_url; 
                 document.querySelector('input[name="question_url"]').value = result.new_image_url; 
-                
-            
-                updateScoreDisplay(result.score);
-                resultDiv.innerText = "Correct! Moving to the next question."; 
+                resultDiv.innerText = ""; 
             }
         };
     </script>
