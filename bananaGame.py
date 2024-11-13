@@ -1,47 +1,46 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 
+
 class Score:
-        
     def set_score(self, solution):
-        #Checks answer
+        # Check answer
         if int(self.current_solution) == int(solution):
             self.score += 1
             self.result = True
-            
-        elif self.current_solution != solution:
+        else:
             self.result = False
             
-        return self.score,self.result
+        return self.score, self.result
 
 class Apicall:
     def __init__(self, api_url):
         self.api_url = api_url
 
     def fetch_question(self):
-        # get question and ans from api
+        # get question and answer from API
         response = requests.get(self.api_url)
         question_data = response.json()
         return question_data['question'], question_data['solution']
 
 class BananaGame(Score):
-    def __init__(self,api_url):
+    def __init__(self, api_url):
+        super().__init__()
         self.api_service = Apicall(api_url)
         self.api = api_url
         self.score = 0
         self.current_question_url = None
         self.current_solution = None
-        
 
     def get_question(self):
-        # Fetch question and update current state
+        # fetch question and ans
         self.current_question_url, self.current_solution = self.api_service.fetch_question()
         return self.current_question_url, self.current_solution
 
-
     def submit_solution(self, solution):
+        # send solution and get score and result
+        return self.set_score(solution)
 
-        return Score.set_score(self, solution)
 
 
 
