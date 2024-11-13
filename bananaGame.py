@@ -3,6 +3,7 @@ import requests
 
 class score:
     def set_score(self, solution):
+        #Checks answer
         if int(self.current_solution) == int(solution):
             self.score += 1
             self.result = True
@@ -38,7 +39,7 @@ class BananaGame(score):
 
 
     def submit_solution(self, solution):
-        #Checks answer
+        
         return score.set_score(self, solution)
 
 
