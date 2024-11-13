@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banana Game</title>
+</head>
+<body>
+    <h1>Banana Game</h1>
+    <img id="banana-image" src="{{ image_url }}" alt="Banana Image" style="max-width: 400px; max-height: 400px;">
+    
+    <!-- form that submits user ans -->
+    <form id="banana-form" action="/submit" method="POST">
+        <input type="hidden" name="question_url" value="{{ image_url }}">
+        <label for="solution">what number is the banana?</label>
+        <input type="number" name="solution" required>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <!-- display result message and score -->
+    <div id="result"></div>
+    <h2>Your Score: <span id="score">0</span></h2>
+
+    <script>
+        
+        let score = 0;
+
+        // Function to update the score on the page
+        function updateScoreDisplay(newScore) {
+            score = newScore;
+            document.getElementById('score').innerText = score; 
+        }
+
+        // Handle form submission and send data to the backend
+        document.querySelector('form').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target); // Collect form data
+
+            // Send form data to the backend '/submit' endpoint
+            const response = await fetch('/submit', {
+                method: 'POST',
+                body: formData
+            });
+
+            // Parse the response from the backend
+            const result = await response.json();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerText = result.message; 
+            document.querySelector('input[name="solution"]').value = ""; 
+
+            // if the answer is correct, update the image and score
+            if (result.new_image_url) {
+                document.getElementById('banana-image').src = result.new_image_url; 
+                document.querySelector('input[name="question_url"]').value = result.new_image_url; 
+                
+            
+                updateScoreDisplay(result.score);
+                resultDiv.innerText = "Correct! Moving to the next question."; 
+            }
+        };
+    </script>
+</body>
+</html>
