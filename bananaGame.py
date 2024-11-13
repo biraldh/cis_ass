@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import requests
 
-class score:
+class Score:
+        
     def set_score(self, solution):
         #Checks answer
         if int(self.current_solution) == int(solution):
@@ -23,14 +24,14 @@ class Apicall:
         question_data = response.json()
         return question_data['question'], question_data['solution']
 
-class BananaGame(score):
+class BananaGame(Score):
     def __init__(self,api_url):
         self.api_service = Apicall(api_url)
         self.api = api_url
         self.score = 0
         self.current_question_url = None
         self.current_solution = None
-        self.result = None
+        
 
     def get_question(self):
         # Fetch question and update current state
@@ -39,8 +40,8 @@ class BananaGame(score):
 
 
     def submit_solution(self, solution):
-        
-        return score.set_score(self, solution)
+
+        return Score.set_score(self, solution)
 
 
 
