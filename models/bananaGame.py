@@ -15,7 +15,7 @@ class Score:
         if not username:
             raise Exception("User is not logged in.")
         
-        # csheck if the answer is correct
+        # check if the answer is correct
         if int(self.current_solution) == int(solution):
             self.score += 1
             self.result = True
@@ -35,7 +35,8 @@ class Score:
             self.result = False
         
         return self.score, self.result
-    
+
+    # get the score from databases
     def get_score(self):
         conn = Database.get_db_connection()
         cursor = conn.cursor()
