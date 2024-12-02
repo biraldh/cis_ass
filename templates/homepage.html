@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            padding: 15px 32px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Game Menu</h1>
+        <button onclick="openLeaderboard()">Open Leaderboard</button>
+        <button onclick="startGame()">Play</button>
+        <button onclick="exitGame()">Exit</button>
+    </div>
+
+    <script>
+        function openLeaderboard() {
+            // Redirect to the leaderboard page 
+            window.location.href = '/game/leaderboard';  
+        }
+
+        function startGame() {
+            // Redirect to the game page
+            window.location.href = '/game/play';  
+        }
+
+        function exitGame() {
+            // Redirect to the login page (adjust route accordingly)
+            window.location.href = '/user/';  
+        }
+    </script>
+
+</body>
+</html>

@@ -106,7 +106,7 @@
             });
     
             if (response.ok) {
-                window.location.href = "/game/play"; 
+                window.location.href = "/game/main"; 
             } else {
                 const data = await response.json();
                 errorMessage.textContent = data.message; 

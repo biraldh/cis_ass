@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ui was designed using chatgpt -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banana Game</title>
@@ -108,32 +107,8 @@
             margin-top: 20px;
         }
 
-        #leaderboard {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            text-align: left;
-        }
-
-        #leaderboard li {
-            font-size: 1.1em;
-            margin: 5px 0;
-        }
-
-        #refresh-leaderboard {
-            background-color: #00b3b3;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 1em;
-            cursor: pointer;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        #refresh-leaderboard:hover {
-            background-color: #009999;
+        #result {
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -145,14 +120,10 @@
     <div class="content">
         <div class="game-container">
             <div class="left-sidebar">
-                <h2>Leaderboard</h2>
-                <button id="refresh-leaderboard">Refresh</button>
-                <ul id="leaderboard">
-                    <!-- generate leaderboard list -->
-                    {% for entry in leaderboard %}
-                        <li>{{ entry[0] }}: {{ entry[1] }}</li>
-                    {% endfor %}
-                </ul> 
+                <!-- Link to leaderboard page -->
+                <a href="{{ url_for('game.get_leaderboard') }}">
+                    <button>View Leaderboard</button>
+                </a>
             </div>
 
             <div class="right-main">
@@ -178,19 +149,10 @@
 
         // Function to update the score on the page
         function updateScoreDisplay(newScore) {
-            score = newScore;
-            document.getElementById('score').innerText = score; 
-        }
-
-        function updateLeaderboard(leaderboard) {
-            const leaderboardElement = document.getElementById('leaderboard');
-            leaderboardElement.innerHTML = ""; // Clear current leaderboard
-
-            leaderboard.forEach(entry => {
-                const li = document.createElement('li');
-                li.textContent = `${entry.username}: ${entry.score}`;
-                leaderboardElement.appendChild(li);
-            });
+            if (result.new_image_url) {
+                score += 1;
+                document.getElementById('score').innerText = score;
+            }
         }
 
         // Handle form submission and send data to the backend
@@ -216,20 +178,10 @@
                 document.getElementById('banana-image').src = result.new_image_url; 
                 document.querySelector('input[name="question_url"]').value = result.new_image_url; 
                 resultDiv.innerText = ""; 
+                score += 1;
+                document.getElementById('score').innerText = score;
             }
         };
-
-        // Refresh leaderboard on button click
-        document.getElementById('refresh-leaderboard').addEventListener('click', async function() {
-            // Fetch the leaderboard data from the backend
-            const response = await fetch('/game/leaderboard');
-            if (response.ok) {
-                const data = await response.json();
-                updateLeaderboard(data.leaderboard); // Update the leaderboard with fresh data
-            } else {
-                alert('Failed to load leaderboard');
-            }
-        });
     </script>
 </body>
 </html>

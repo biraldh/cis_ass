@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify,render_template,session
-from models.userManagement import UserManager
+from controller.userManagement import UserManager
 
 
 user_bp = Blueprint("user", __name__)
@@ -10,7 +10,7 @@ user_manager = UserManager()
 def registerui():
     return render_template('register.html')
 
-@user_bp.route("/loginpage")
+@user_bp.route("/")
 def loginui():
     return render_template('login.html')
 
