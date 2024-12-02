@@ -11,7 +11,7 @@ class Score(ScoreManager):
 
         if not username:
             raise Exception("User is not logged in.")
-        
+    
         # Check if the answer is correct
         if int(self.current_solution) == int(solution):
             self.score += 1
